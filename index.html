@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JustStreamIt</title>
+    <link href="style.css" rel="stylesheet">
+    <script src="script.js" defer></script>
+</head>
+
+<body>
+    <!-- Main page -->
+    <header>
+        <h1>Videos à la demande</h1>
+    </header>
+
+    <main>
+
+        <section id="best-movie">
+            <h2>Meilleur film</h2>
+            <div id="best-movie-container" class="best-movie-container">
+                <img id="best-movie-img" src="https://picsum.photos/id/1/252/247" alt="Best movie picture">
+                <div class="best-movie-details">
+                    <h3 id="best-movie-title">Titre du film</h3>
+                    <p id="best-movie-summary">Résumé du film...</p>
+                    <button id="best-movie-details-btn">Détails</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="top-rated-movies">
+            <h2>Films les mieux notés</h2>
+            <div id="top-rated-movies-grid" class="movies-grid">
+                <!-- -->
+            </div>
+        </section>
+        
+        <section id="category-1">
+            <h2>Catégorie 1</h2>
+            <div id="category-1-grid" class="movies-grid">
+                <!-- -->
+            </div>
+        </section>
+        
+        <section id="category-2">
+            <h2>Catégorie 2</h2>
+            <div id="category-2-grid" class="movies-grid">
+                <!-- -->
+            </div>
+        </section>
+        
+        <section id="custom-category">
+            <h2>Autres
+                <select id="genre-select">
+                    <option value="">Select a genre</option>
+                </select>
+            </h2>
+            <div id="custom-category-grid" class="movies-grid">
+                <!-- -->
+            </div>
+        </section>
+        
+    </main>
+
+</body>
+</html>
