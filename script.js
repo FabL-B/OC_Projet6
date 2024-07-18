@@ -1,100 +1,139 @@
-document.addEventListener("DOMContentLoaded", () => {
+const bestFilmUrl = "http://localhost:8000/api/v1/titles/317248";
+const bestMoviesUrl = "http://localhost:8000/api/v1/titles/?&sort_by=-imdb_score";
+const apiGenreUrl = "http://localhost:8000/api/v1/genres/";
 
-    const bestFilmUrl = "http://localhost:8000/api/v1/titles/9";
-    const bestMoviesUrl = "http://localhost:8000/api/v1/titles/?&sort_by=-imdb_score"
-    const apiGenreUrl = "http://localhost:8000/api/v1/genres/"
+const displayBestMovie = async (url) => {
+    const response = await fetch(url);
+    const data = await response.json();
+    document.getElementById("best-movie-img").src = data.image_url;
+    document.getElementById("best-movie-title").textContent = data.title;
+    document.getElementById("best-movie-summary").textContent = data.description;
+    const detailsButton = document.getElementById("button-modal-movie-id");
+    detailsButton.id = `button-overlay-${data.id}`;
+    detailsButton.setAttribute('onclick', `toggleModal(${data.id})`);
+};
 
-    
-    async function displayBestMovie(url) {
-        const response = await fetch(url);
+const displayMovies = async (url, genreGrid) => {
+    const container = document.getElementById(genreGrid);
+    let moviesList = [];
+    let nextPage = url;
+    while (moviesList.length < 6 && nextPage) {
+        const response = await fetch(nextPage);
         const data = await response.json();
-        document.getElementById("best-movie-img").src = data.image_url;
-        document.getElementById("best-movie-title").textContent = data.title;
-        document.getElementById("best-movie-summary").textContent = data.long_description
+        moviesList = moviesList.concat(data.results);
+        nextPage = data.next;
     }
 
-    async function displayMovies(url, genreGrid) {
-        const container = document.getElementById(genreGrid);
-        let moviesList = [];
-        let nextPage = url;
-        while (moviesList.length < 6 && nextPage) {
-            const response = await fetch(nextPage);
-            const data = await response.json();
-            moviesList = moviesList.concat(data.results);
-            nextPage = data.next;
+    const toDisplayMovies = moviesList.slice(0, 6);
+
+    container.innerHTML = "";
+
+    toDisplayMovies.forEach(movie => {
+        const movieItem = document.createElement("div");
+        movieItem.className = "movie-item";
+        movieItem.innerHTML = `
+            <img src="${movie.image_url}" alt="${movie.title}">
+            <div class="movie-overlay">${movie.title}
+                <button class="button-overlay" id="button-overlay-${movie.id}" onclick="toggleModal('${movie.id}')">Détails</button>
+            </div>
+        `;
+        container.appendChild(movieItem);
+    });
+}
+
+const fetchGenres = async (genreUrl) => {
+    let genresList = [];
+    let nextPage = genreUrl;
+
+    while (nextPage) {
+        const response = await fetch(nextPage);
+        const data = await response.json();
+        for (let genre of data.results) {
+            genresList.push(genre.name);
         }
-
-        const toDisplayMovies = moviesList.slice(0, 6);
-
-        container.innerHTML = "";
-
-        toDisplayMovies.forEach(movie => {
-            const movieItem = document.createElement("div");
-            movieItem.className = "movie-item";
-            movieItem.innerHTML = `
-                <img src="${movie.image_url}" alt="${movie.title}">
-                <div class="movie-overlay">${movie.title}
-                    <button id="button-overlay">Détails</button>
-                </div>
-            `;
-            container.appendChild(movieItem);
-        clickDetailsListener();
-        });
-
+        nextPage = data.next;
     }
+    return genresList;
+};
 
-    async function fetchGenres(genreUrl) {
-        let genresList = [];
-        nextPage = genreUrl
+const displayGenreList = async () => {
+    const genresList = await fetchGenres(apiGenreUrl);
+    const genreSelect = document.getElementById("genre-select");
+    for (let genre of genresList) {
+        const option = document.createElement("option");
+        option.value = genre;
+        option.textContent = genre;
+        genreSelect.appendChild(option);
+    }
+    selectGenreListener(genreSelect);
+};
 
-        while (nextPage) {
-            const response = await fetch(nextPage);
-            const data = await response.json();
-            for (let genre of data.results) {
-                genresList.push(genre.name);
-            }
-            nextPage = data.next;
+const selectGenreListener = (genreSelect) => {
+    genreSelect.addEventListener("change", async (event) => {
+        const selectedGenre = event.target.value;
+        const selectedUrl = `http://localhost:8000/api/v1/titles/?genre=${selectedGenre}`;
+        if (selectedUrl) {
+            await displayMovies(selectedUrl, "custom-category-grid");
         }
-        return genresList;
-    }
+    });
+};
 
-    async function displayGenreList() {
-        const genresList = await fetchGenres(apiGenreUrl)
-        const genreSelect = document.getElementById("genre-select");
-        for (let genre of genresList) {
-            const option = document.createElement("option");
-            option.value = genre;
-            option.textContent = genre;
-            genreSelect.appendChild(option);
+const toggleModal = (movieId = null) => {
+    const modal = document.getElementById("modal");
+    if (modal.classList.contains("open-modal")) {
+        modal.classList.remove("open-modal");
+    } else {
+        if (movieId) {
+            displayMovieDetails(movieId);
         }
-        selectGenreListener(genreSelect, "genre-grid");
+        modal.classList.add("open-modal");
     }
+};
 
-    function selectGenreListener(genreSelect) {
-        genreSelect.addEventListener("change", async (event) => {
-            const selectedGenre = event.target.value;
-            const selectedUrl = `http://localhost:8000/api/v1/titles/?genre=${selectedGenre}`
-            if (selectedUrl) {
-                await displayMovies(selectedUrl, "custom-category-grid");
-            }
-        });
-    }
+const displayMovieDetails = async (movieId) => {
+    const movieUrl = `http://localhost:8000/api/v1/titles/${movieId}`;
+    const response = await fetch(movieUrl);
+    const data = await response.json();
+    document.getElementById("modal-title").textContent = data.title;
+    document.getElementById("modal-year-genre").textContent = `${data.year} - ${data.genres.join(", ")}`;
+    document.getElementById("modal-rated-duration-country").textContent = `${data.rated} - ${data.duration} minutes - (${data.countries})`;
+    document.getElementById("modal-score").textContent = `IMDB Score: ${data.imdb_score}`;
+    document.getElementById("modal-director").textContent = `Director: ${data.directors.join(", ")}`;
+    document.getElementById("modal-summary").textContent = data.long_description;
+    document.getElementById("modal-casting").textContent = `Avec: ${data.actors.join(", ")}`;
+    document.getElementById("modal-img").src = data.image_url;
+};
 
-    async function clickDetailsListener() {
-        buttonDetail = document.querySelectorAll(".button-overlay");
-        buttonDetail.forEach(button => {
-            button.addEventListener("click", () => {
-                console.log("bouton cliqué");
-            });
-        });
+const showMoreMovies = (genreGrid, showMoreBtnId, showLessBtnId) => {
+    const container = document.getElementById(genreGrid);
+    const movieItems = container.querySelectorAll('.movie-item');
+    movieItems.forEach(movieItem => {
+        movieItem.style.display = 'block';
+    });
+    document.getElementById(showMoreBtnId).style.display = 'none';
+    document.getElementById(showLessBtnId).style.display = 'block';
+}
 
-    }
+const showLessMovies = (genreGrid, showMoreBtnId, showLessBtnId) => {
+    const container = document.getElementById(genreGrid);
+    const movieItems = container.querySelectorAll('.movie-item');
+    movieItems.forEach((movieItem, index) => {
+        if (window.innerWidth >= 480 && window.innerWidth < 768) {
+            movieItem.style.display = index < 4 ? 'block' : 'none';
+        } else {
+            movieItem.style.display = index < 2 ? 'block' : 'none';
+        }
+    });
+    document.getElementById(showMoreBtnId).style.display = 'block';
+    document.getElementById(showLessBtnId).style.display = 'none';
+}
 
-    
-    displayGenreList();
-    displayBestMovie(bestFilmUrl);
-    displayMovies(bestMoviesUrl, "top-rated-movies-grid");
-    displayMovies("http://localhost:8000/api/v1/titles/?genre=Action", "category-1-grid");
-    displayMovies("http://localhost:8000/api/v1/titles/?genre=Mystery", "category-2-grid");
-    
-});
+const main = async () => {
+    await displayGenreList();
+    await displayBestMovie(bestFilmUrl);
+    await displayMovies(bestMoviesUrl, "top-rated-movies-grid");
+    await displayMovies("http://localhost:8000/api/v1/titles/?genre=Adventure", "category-1-grid");
+    await displayMovies("http://localhost:8000/api/v1/titles/?genre=Mystery", "category-2-grid");
+};
+
+document.addEventListener("DOMContentLoaded", main);
