@@ -9,7 +9,7 @@ const displayBestMovie = async (url) => {
     document.getElementById("best-movie-title").textContent = data.title;
     document.getElementById("best-movie-summary").textContent = data.description;
     const detailsButton = document.getElementById("button-modal-movie-id");
-    detailsButton.id = `button-overlay-${data.id}`;
+    detailsButton.id = `button-modal-${data.id}`;
     detailsButton.setAttribute('onclick', `toggleModal(${data.id})`);
 };
 
@@ -33,8 +33,8 @@ const displayMovies = async (url, genreGrid) => {
         movieItem.className = "movie-item";
         movieItem.innerHTML = `
             <img src="${movie.image_url}" alt="${movie.title}">
-            <div class="movie-overlay">${movie.title}
-                <button class="button-overlay" id="button-overlay-${movie.id}" onclick="toggleModal('${movie.id}')">Détails</button>
+            <div class="movie-modal">${movie.title}
+                <button class="button-modal" id="button-modal-${movie.id}" onclick="toggleModal('${movie.id}')">Détails</button>
             </div>
         `;
         container.appendChild(movieItem);

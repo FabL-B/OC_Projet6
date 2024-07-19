@@ -11,72 +11,92 @@
 
 <body>
     <!-- Main page -->
-    <header>
-        <h1>Videos à la demande</h1>
-    </header>
+    <main class="container">
+        
+        <div class="container-2">
+            <header>
+                <h1>Videos à la demande</h1>
+            </header>
+        </div>
 
-    <main>
-
-        <section id="best-movie">
-            <h2>Meilleur film</h2>
-            <div id="best-movie-container" class="best-movie-container">
-                <img id="best-movie-img" src="https://picsum.photos/id/1/252/247" alt="Best movie picture">
-                <div class="best-movie-details">
-                    <h3 id="best-movie-title">Titre du film</h3>
-                    <p id="best-movie-summary">Résumé du film...</p>
-                    <button class="best-movie-modal-trigger-btn" id="button-modal-movie-id"
-                        onclick="toggleModal()">Détails</button>
+        <div class="container-2">
+            <section id="best-movie">
+                <h2>Meilleur film</h2>
+                <div id="best-movie-container" class="best-movie-container">
+                    <img id="best-movie-img" src="https://picsum.photos/id/1/252/247" alt="Best movie picture">
+                    <div class="best-movie-details">
+                        <h3 id="best-movie-title">Titre du film</h3>
+                        <p id="best-movie-summary">Résumé du film...</p>
+                        <button class="best-movie-modal-trigger-btn" id="button-modal-movie-id"
+                            onclick="toggleModal()">Détails</button>
+                    </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        </div>
 
-        <section id="top-rated-movies">
-            <h2>Films les mieux notés</h2>
-            <div id="top-rated-movies-grid" class="movies-grid">
-                <!-- -->
-            </div>
-            <button id="show-more-top-rated" class="show-more-btn"
-                onclick="showMoreMovies('top-rated-movies-grid', 'show-more-top-rated', 'show-less-top-rated')">Voir plus</button>
-            <button id="show-less-top-rated" class="show-less-btn"
-                onclick="showLessMovies('top-rated-movies-grid', 'show-more-top-rated', 'show-less-top-rated')"
-                style="display: none;">Voir moins</button>
-        </section>
+        <div class="container-2">
+            <section id="top-rated-movies">
+                <h2>Films les mieux notés</h2>
+                <div id="top-rated-movies-grid" class="movies-grid">
+                    <!-- -->
+                </div>
+                <button id="show-more-top-rated" class="show-more-btn"
+                    onclick="showMoreMovies('top-rated-movies-grid', 'show-more-top-rated', 'show-less-top-rated')">Voir
+                    plus</button>
+                <button id="show-less-top-rated" class="show-less-btn"
+                    onclick="showLessMovies('top-rated-movies-grid', 'show-more-top-rated', 'show-less-top-rated')"
+                    style="display: none;">Voir moins</button>
+            </section>
+        </div>
 
-        <section id="category-1">
-            <h2>Catégorie 1</h2>
-            <div id="category-1-grid" class="movies-grid">
-                <!-- -->
-            </div>
-            <button id="show-more-category-1" class="show-more-btn"
-                onclick="showMoreMovies('category-1-grid', 'show-more-category-1', 'show-less-category-1')">Voir plus</button>
-            <button id="show-less-category-1" class="show-less-btn"
-                onclick="showLessMovies('category-1-grid', 'show-more-category-1', 'show-less-category-1')" style="display: none;">Voir moins</button>
+        <div class="container-2">
+            <section id="category-1">
+                <h2>Catégorie 1</h2>
+                <div id="category-1-grid" class="movies-grid">
+                    <!-- -->
+                </div>
+                <button id="show-more-category-1" class="show-more-btn"
+                    onclick="showMoreMovies('category-1-grid', 'show-more-category-1', 'show-less-category-1')">Voir
+                    plus</button>
+                <button id="show-less-category-1" class="show-less-btn"
+                    onclick="showLessMovies('category-1-grid', 'show-more-category-1', 'show-less-category-1')"
+                    style="display: none;">Voir moins</button>
+            </section>
+        </div>
 
-        <section id="category-2">
-            <h2>Catégorie 2</h2>
-            <div id="category-2-grid" class="movies-grid">
-                <!-- -->
-            </div>
-            <button id="show-more-category-2" class="show-more-btn"
-                onclick="showMoreMovies('category-2-grid', 'show-more-category-2', 'show-less-category-2')">Voir plus</button>
-            <button id="show-less-category-2" class="show-less-btn"
-                onclick="showLessMovies('category-2-grid', 'show-more-category-2', 'show-less-category-2')" style="display: none;">Voir moins</button>
-        </section>
+        <div class="container-2">
+            <section id="category-2">
+                <h2>Catégorie 2</h2>
+                <div id="category-2-grid" class="movies-grid">
+                    <!-- -->
+                </div>
+                <button id="show-more-category-2" class="show-more-btn"
+                    onclick="showMoreMovies('category-2-grid', 'show-more-category-2', 'show-less-category-2')">Voir
+                    plus</button>
+                <button id="show-less-category-2" class="show-less-btn"
+                    onclick="showLessMovies('category-2-grid', 'show-more-category-2', 'show-less-category-2')"
+                    style="display: none;">Voir moins</button>
+            </section>
+        </div>
 
-        <section id="custom-category">
-            <h2>Autres
-                <select id="genre-select">
-                    <option value="">Select a genre</option>
-                </select>
-            </h2>
-            <div id="custom-category-grid" class="movies-grid">
-                <!-- -->
-            </div>
-            <button id="show-more-custom-category" class="show-more-btn"
-                onclick="showMoreMovies('custom-category-grid', 'show-more-custom-category', 'show-less-custom-category')">Voir plus</button>
-            <button id="show-less-custom-category" class="show-less-btn"
-                onclick="showLessMovies('custom-category-grid', 'show-more-custom-category', 'show-less-custom-category')" style="display: none;">Voir moins</button>
-        </section>
+        <div class="container-2">
+            <section id="custom-category">
+                <h2>Autres
+                    <select id="genre-select">
+                        <option value="">Select a genre</option>
+                    </select>
+                </h2>
+                <div id="custom-category-grid" class="movies-grid">
+                    <!-- -->
+                </div>
+                <button id="show-more-custom-category" class="show-more-btn"
+                    onclick="showMoreMovies('custom-category-grid', 'show-more-custom-category', 'show-less-custom-category')">Voir
+                    plus</button>
+                <button id="show-less-custom-category" class="show-less-btn"
+                    onclick="showLessMovies('custom-category-grid', 'show-more-custom-category', 'show-less-custom-category')"
+                    style="display: none;">Voir moins</button>
+            </section>
+        </div>
 
         <div class="modal-container" id="modal">
             <div class="overlay"></div>
