@@ -115,26 +115,16 @@ main {
 .movie-item {
     position: relative;
     width: 100%;
-    height: auto;
+    padding-top: 100%;
 }
 
 .movie-item img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
-
-.movie-modal {
     position: absolute;
-    top: 37px;
+    top: 0;
     left: 0;
-    right: 0;
-    background-color: #00000080;
-    color: white;
-    padding: 10px;
-    text-align: center;
-    font-size: 16px;
-    height: 48px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .button-modal {
@@ -152,10 +142,34 @@ main {
     font-size: 14px;
 }
 
+.movie-modal {
+    position: absolute;
+    top: 37px;
+    left: 0;
+    right: 0;
+    background-color: #00000080;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 16px;
+    height: 48px;
+}
+
 .movie-modal button:hover {
     background-color: #696969;
 }
 
+select {
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    background-color: #f8f8f8;
+    color: #333;
+    width: 200px;
+    cursor: pointer;
+}
+
+/* Modal window */
 .modal-container {
     display: none;
     position: fixed;
@@ -165,75 +179,49 @@ main {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.4);
-    padding-top: 60px;
+    padding-top: 5px;
 }
 
 .open-modal {
-    display: block;
+    display: flex;
 }
 
 .modal-content {
+    display: flex;
+    flex-direction: row ;
+    flex-wrap: wrap;
+    justify-content: space-around;
     background-color: #fefefe;
     margin: 5% auto;
     padding: 20px;
     border: 1px solid transparent;
-    width: 90%;
+    width: 80%;
     max-width: 800px;
+    overflow-y: auto;
     position: relative;
     box-shadow: 0 0 0 5px #000000;
+    font-family: Arial, sans-serif;
+    line-height: 1.5;
 }
 
-.close-button {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
+.modal-content .modal-header {
+    justify-content: left;
+}
+.modal-content .modal-img { 
+    order: 1;
 }
 
-.close-button:hover,
-.close-button:focus {
-    color: black;
-    text-decoration: none;
+.modal-footer{
+    order: 2;
 }
 
-.modal-header h2 {
-    margin-top: 0;
+.close-text {
+    display: none;
 }
 
-.modal-body {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.modal-left {
-    width: 100%;
-}
-
-.modal-right {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.modal-right img {
-    max-width: 100%;
-    height: auto;
-}
-
-.close-modal-btn {
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin-top: 20px;
+.close-icon {
     display: block;
-    width: 100%;
-    text-align: center;
 }
 
 .show-more-btn, .show-less-btn {
@@ -260,11 +248,27 @@ main {
     .best-movie-container{
         width: 289px;
     }
+
+    .close-modal-trigger {
+        width: 32px;
+        height: 32px;
+        padding: 10px;
+        color: #FA0B0B;
+        cursor: pointer;
+        background: none;
+        border: none;
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 40px;
+        position: absolute;
+        top: 5px;
+        right: 10px;
+    }
 }
 
 
 /* Tablet display */
-@media (min-width: 480px) and (max-width: 767px) {
+@media (min-width: 480px) and (max-width: 810px) {
     .container {
         width: 788px;
         padding: 0;
@@ -279,18 +283,6 @@ main {
     .best-movie-container {
         flex-direction: row;
     }
-
-    .modal-body {
-        flex-direction: row;
-    }
-
-    .modal-left {
-        width: 60%;
-    }
-
-    .modal-right {
-        width: 40%;
-    }
     
     .movies-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -303,10 +295,57 @@ main {
     .movies-grid .movie-item:nth-child(-n+4) {
         display: block;
     }
+
+    .close-modal-trigger {
+        width: 32px;
+        height: 32px;
+        padding: 10px;
+        color: #FA0B0B;
+        cursor: pointer;
+        background: none;
+        border: none;
+        font-size: 24px;
+        font-weight: bold;
+        line-height: 40px;
+        position: absolute;
+        top: 5px;
+        right: 10px;
+    }
+
+    .modal-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 10px;
+        height: max-content;
+        max-height: 90%;
+        overflow-y: auto;
+    }
+
+    .modal-header {
+        grid-column: 1 / 2;
+        grid-row: 1;
+    }
+
+    .modal-img {
+        grid-column: 2 / 3;
+        grid-row: 1;
+    }
+
+    .modal-body {
+        grid-column: 1 / 3;
+        grid-row: 2;
+    }
+
+    .modal-footer {
+        grid-column: 1 / 3;
+        grid-row: 3;
+    }
+
 }
 
 /* Desktop display */
-@media (min-width: 768px) {
+@media (min-width: 811px) {
     .container {
         width: 1054px;
         padding: 0;
@@ -327,17 +366,6 @@ main {
         width: 844px;
     }
 
-    .modal-body {
-        flex-direction: row;
-    }
-
-    .modal-left {
-        width: 60%;
-    }
-
-    .modal-right {
-        width: 40%;
-    }
     
     .movies-grid {
         grid-template-columns: repeat(3, 1fr);
@@ -349,5 +377,62 @@ main {
 
     .show-more-btn, .show-less-btn {
         display: none !important;
+    }
+
+    .modal-content {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        grid-template-rows: auto auto auto;
+        gap: 10px;
+        height: max-content;
+        max-height: 90%;
+        overflow-y: auto;
+    }
+
+    .modal-header {
+        grid-column: 1 / 2;
+        grid-row: 1;
+    }
+
+    .modal-img {
+        grid-column: 2 / 3;
+        grid-row: 1;
+    }
+
+    .modal-body {
+        grid-column: 1 / 3;
+        grid-row: 2;
+    }
+
+    .modal-footer {
+        grid-column: 1 / 3;
+        grid-row: 3;
+    }
+
+    .close-modal-trigger {
+        grid-column: 1 / 3;
+        grid-row: 4;
+        width: 100px;
+        height: 40px;
+        padding: 10px;
+        background-color: #FA0B0B;
+        color: #fff;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        bottom: 10px;
+        margin: auto;
+    }
+
+    .close-modal-trigger:hover {
+        background-color: #bf0811;
+    }
+
+    .close-text {
+        display: block;
+    }
+
+    .close-icon {
+        display: none;
     }
 }
