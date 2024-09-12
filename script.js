@@ -1,8 +1,15 @@
-const bestFilmUrl = "http://localhost:8000/api/v1/titles/317248";
 const bestMoviesUrl = "http://localhost:8000/api/v1/titles/?&sort_by=-imdb_score";
 const apiGenreUrl = "http://localhost:8000/api/v1/genres/";
 
-const displayBestMovie = async (url) => {
+const getBestMovieUrl = async () => {
+    const response = await fetch(bestMoviesUrl);
+    const data = await response.json();
+    const bestMovie = data.results[0];
+    return `http://localhost:8000/api/v1/titles/${bestMovie.id}`;
+};
+
+const displayBestMovie = async () => {
+    url = await getBestMovieUrl()
     const response = await fetch(url);
     const data = await response.json();
     document.getElementById("best-movie-img").src = data.image_url;
@@ -71,7 +78,7 @@ const displayGenreList = async () => {
 const selectGenreListener = (genreSelect) => {
     genreSelect.addEventListener("change", async (event) => {
         const selectedGenre = event.target.value;
-        const selectedUrl = `http://localhost:8000/api/v1/titles/?genre=${selectedGenre}`;
+        const selectedUrl = `http://localhost:8000/api/v1/titles/?genre=${selectedGenre}&sort_by=-imdb_score`;
         if (selectedUrl) {
             await displayMovies(selectedUrl, "custom-category-grid");
         }
@@ -98,9 +105,10 @@ const displayMovieDetails = async (movieId) => {
     document.getElementById("modal-year-genre").textContent = `${data.year} - ${data.genres.join(", ")}`;
     document.getElementById("modal-rated-duration-country").textContent = `${data.rated} - ${data.duration} minutes - (${data.countries})`;
     document.getElementById("modal-score").textContent = `IMDB Score: ${data.imdb_score}`;
+    document.getElementById("box-office-revenue").textContent = `Box office revenue: ${data.worldwide_gross_income}`
     document.getElementById("modal-director").textContent = `Director: ${data.directors.join(", ")}`;
     document.getElementById("modal-summary").textContent = data.long_description;
-    document.getElementById("modal-casting").textContent = `Avec: ${data.actors.join(", ")}`;
+    document.getElementById("modal-casting").textContent = `${data.actors.join(", ")}`;
     document.getElementById("modal-img").src = data.image_url;
 };
 
@@ -130,10 +138,10 @@ const showLessMovies = (genreGrid, showMoreBtnId, showLessBtnId) => {
 
 const main = async () => {
     await displayGenreList();
-    await displayBestMovie(bestFilmUrl);
+    await displayBestMovie();
     await displayMovies(bestMoviesUrl, "top-rated-movies-grid");
-    await displayMovies("http://localhost:8000/api/v1/titles/?genre=Adventure", "category-1-grid");
-    await displayMovies("http://localhost:8000/api/v1/titles/?genre=Mystery", "category-2-grid");
+    await displayMovies("http://localhost:8000/api/v1/titles/?genre=Adventure&sort_by=-imdb_score", "category-1-grid");
+    await displayMovies("http://localhost:8000/api/v1/titles/?genre=Mystery&sort_by=-imdb_score", "category-2-grid");
 };
 
 document.addEventListener("DOMContentLoaded", main);
