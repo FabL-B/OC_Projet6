@@ -12,7 +12,7 @@
 <body>
     <!-- Main page -->
     <main class="container">
-        
+
         <div class="container-2">
             <header>
                 <h1>Videos à la demande</h1>
@@ -21,9 +21,9 @@
 
         <div class="container-2">
             <section id="best-movie">
-                <h2>Meilleur film</h2>
+                <h2>Best movie</h2>
                 <div id="best-movie-container" class="best-movie-container">
-                    <img id="best-movie-img" src="https://picsum.photos/id/1/252/247" alt="Best movie picture">
+                    <img id="best-movie-img" src="image/default-image.png" alt="Best movie picture">
                     <div class="best-movie-details">
                         <h3 id="best-movie-title">Titre du film</h3>
                         <p id="best-movie-summary">Résumé du film...</p>
@@ -36,52 +36,52 @@
 
         <div class="container-2">
             <section id="top-rated-movies">
-                <h2>Films les mieux notés</h2>
+                <h2>Best rated movies</h2>
                 <div id="top-rated-movies-grid" class="movies-grid">
                     <!-- -->
                 </div>
                 <button id="show-more-top-rated" class="show-more-btn"
-                    onclick="showMoreMovies('top-rated-movies-grid', 'show-more-top-rated', 'show-less-top-rated')">Voir
-                    plus</button>
+                    onclick="showMoreMovies('top-rated-movies-grid', 'show-more-top-rated', 'show-less-top-rated')">See
+                    more</button>
                 <button id="show-less-top-rated" class="show-less-btn"
                     onclick="showLessMovies('top-rated-movies-grid', 'show-more-top-rated', 'show-less-top-rated')"
-                    style="display: none;">Voir moins</button>
+                    style="display: none;">See less</button>
             </section>
         </div>
 
         <div class="container-2">
             <section id="category-1">
-                <h2>Catégorie 1</h2>
+                <h2>Adventure</h2>
                 <div id="category-1-grid" class="movies-grid">
                     <!-- -->
                 </div>
                 <button id="show-more-category-1" class="show-more-btn"
-                    onclick="showMoreMovies('category-1-grid', 'show-more-category-1', 'show-less-category-1')">Voir
-                    plus</button>
+                    onclick="showMoreMovies('category-1-grid', 'show-more-category-1', 'show-less-category-1')">See
+                    more</button>
                 <button id="show-less-category-1" class="show-less-btn"
                     onclick="showLessMovies('category-1-grid', 'show-more-category-1', 'show-less-category-1')"
-                    style="display: none;">Voir moins</button>
+                    style="display: none;">See less</button>
             </section>
         </div>
 
         <div class="container-2">
             <section id="category-2">
-                <h2>Catégorie 2</h2>
+                <h2>Mystery</h2>
                 <div id="category-2-grid" class="movies-grid">
                     <!-- -->
                 </div>
                 <button id="show-more-category-2" class="show-more-btn"
-                    onclick="showMoreMovies('category-2-grid', 'show-more-category-2', 'show-less-category-2')">Voir
-                    plus</button>
+                    onclick="showMoreMovies('category-2-grid', 'show-more-category-2', 'show-less-category-2')">See
+                    more</button>
                 <button id="show-less-category-2" class="show-less-btn"
                     onclick="showLessMovies('category-2-grid', 'show-more-category-2', 'show-less-category-2')"
-                    style="display: none;">Voir moins</button>
+                    style="display: none;">See less</button>
             </section>
         </div>
 
         <div class="container-2">
             <section id="custom-category">
-                <h2>Autres
+                <h2>Custom
                     <select id="genre-select">
                         <option value="">Select a genre</option>
                     </select>
@@ -90,35 +90,38 @@
                     <!-- -->
                 </div>
                 <button id="show-more-custom-category" class="show-more-btn"
-                    onclick="showMoreMovies('custom-category-grid', 'show-more-custom-category', 'show-less-custom-category')">Voir
-                    plus</button>
+                    onclick="showMoreMovies('custom-category-grid', 'show-more-custom-category', 'show-less-custom-category')">See
+                    more</button>
                 <button id="show-less-custom-category" class="show-less-btn"
                     onclick="showLessMovies('custom-category-grid', 'show-more-custom-category', 'show-less-custom-category')"
-                    style="display: none;">Voir moins</button>
+                    style="display: none;">See less</button>
             </section>
         </div>
 
         <div class="modal-container" id="modal">
-            <div class="overlay"></div>
             <div class="modal-content">
-                <button class="close-modal-trigger" onclick="toggleModal()">&times;</button>
                 <div class="modal-header">
-                    <h2 id="modal-title"></h2>
+                    <h3 id="modal-title">Movie Title</h3>
                     <p id="modal-year-genre"></p>
                     <p id="modal-rated-duration-country"></p>
                     <p id="modal-score"></p>
+                    <p id="box-office-revenue"></p>
+                    <p id="modal-director"></p>
                 </div>
                 <div class="modal-body">
-                    <div class="modal-left">
-                        <p id="modal-director"></p>
                         <p id="modal-summary"></p>
-                        <p><strong>Avec:</strong></p>
-                        <p id="modal-casting"></p>
-                    </div>
-                    <div class="modal-right">
-                        <img id="modal-img" src="" alt="Movie Image">
-                    </div>
                 </div>
+                <div class="modal-img">
+                    <img id="modal-img" src="image/default-image.png" alt="Movie Image">
+                </div>
+                <div class="modal-footer">
+                    <p><strong>Staring: </strong></p>
+                    <p id="modal-casting"></p>
+                </div>
+                <button class="close-modal-trigger" onclick="toggleModal()">
+                    <span class="close-text">Close</span>
+                    <span class="close-icon">X</span>
+                </button>
             </div>
         </div>
 
